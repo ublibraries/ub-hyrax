@@ -48,11 +48,12 @@ en:
   hyrax:
     account_name: My Institution Account Id
     directory:
-      suffix: "@example.org"
+      suffix: "@buffalo.edu"
     footer:
       copyright_html: "<strong>Copyright &copy; 2022 Samvera</strong> Licensed under the Apache License, Version 2.0"
-      service_html: A service of <a href="http://samvera.org/" class="navbar-link" target="_blank">Samvera</a>.
+      service_html: Hosted with absolutely no testing by <a href="https://library.buffalo.edu" class="navbar-link" target="_blank">UB Libraries</a>.
     institution_name: Institution
-    institution_name_full: The Institution Name
+    institution_name_full: The State University of New York at Buffalo Libraries
     product_name: Koppie
-    product_twitter_handle: "@SamveraRepo"
+    friendly_name: UB-Hyrax
+      #product_twitter_handle: "@"
