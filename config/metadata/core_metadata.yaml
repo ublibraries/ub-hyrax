@@ -1,0 +1,23 @@
+attributes:
+  title:
+    type: string
+    multiple: true
+    index_keys:
+      - "title_sim"
+      - "title_tesim"
+    form:
+      required: true
+      primary: true
+      multiple: true
+    predicate: http://purl.org/dc/terms/title
+  date_modified:
+    type: date_time
+    predicate: http://purl.org/dc/terms/modified
+  date_uploaded:
+    type: date_time
+    predicate: http://purl.org/dc/terms/dateSubmitted
+  depositor:
+    type: string
+    predicate: http://id.loc.gov/vocabulary/relators/dpt
+    index_keys:
+      - "depositor_tesim"

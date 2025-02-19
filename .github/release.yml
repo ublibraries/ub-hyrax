@@ -1,0 +1,32 @@
+changelog:
+  categories:
+    - title: Major Changes (Potentially breaking changes)
+      labels:
+        - notes-major
+    - title: New Features and Non-breaking Changes
+      labels:
+        - notes-minor
+    - title: Deprecation Notices
+      labels:
+        - notes-deprecation
+    - title: Bug Fixes
+      labels:
+        - notes-bugfix
+    - title: Valkyrie Progress
+      labels:
+        - notes-valkyrie
+    - title: Documentation
+      labels:
+        - notes-docs
+    - title: Containerization
+      labels:
+        - notes-container
+    - title: Tests and CI Process
+      labels:
+        - notes-tests
+    - title: Accessibility Standards
+      labels:
+        - notes-accessibility
+    - title: Other
+      labels:
+        - "*"
