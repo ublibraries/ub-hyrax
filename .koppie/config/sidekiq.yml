@@ -6,12 +6,19 @@
   - import # added
   - export # added
 
+:limits:
+  import: 4
+
+:timeout: 300
+
+:max_retries: 3
+
 test: # n/a
   :concurrency: 1
 
 development:
-  :concurrency: <%= ENV['SIDEKIQ_WORKERS'] || 1 %>
+  :concurrency: <%= ENV['SIDEKIQ_WORKERS'] || 3 %>
   :logfile: ./log/sidekiq_development.log
 
 production:
-  :concurrency: <%= ENV['SIDEKIQ_WORKERS'] || 2 %>
+  :concurrency: <%= ENV['SIDEKIQ_WORKERS'] || 10 %>

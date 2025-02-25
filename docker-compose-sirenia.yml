@@ -22,7 +22,7 @@ services:
       - VALKYRIE_STORAGE_ADAPTER=fedora_storage
     depends_on:
       - worker
-      - chrome
+#      - chrome
       - fits
       - memcached
       - postgres
@@ -76,26 +76,26 @@ services:
     networks:
       - sirenia
 
-  chrome:
-    image: selenium/standalone-chromium:4
-    environment:
+        #  chrome:
+        #image: selenium/standalone-chromium:4
+        #environment:
 #      - START_XVFB=false
-      - SE_NODE_SESSION_TIMEOUT=800
-      - SE_ENABLE_TRACING=false
-      - SE_ENABLE_BROWSER_LEFTOVERS_CLEANUP=true
-      - SE_BROWSER_ARGS_DISABLE_DSHM=--disable-dev-shm-usage
-      - SE_BROWSER_ARGS_HEADLESS=--headless=new
+# - SE_NODE_SESSION_TIMEOUT=800
+#     - SE_ENABLE_TRACING=false
+#     - SE_ENABLE_BROWSER_LEFTOVERS_CLEANUP=true
+#     - SE_BROWSER_ARGS_DISABLE_DSHM=--disable-dev-shm-usage
+#     - SE_BROWSER_ARGS_HEADLESS=--headless=new
 #    logging:
 #      driver: none
-    volumes:
-      - /dev/shm:/dev/shm
-    shm_size: 2g
-    ports:
-      - "4447:4444"
-      - "5962:5900"
-      - "7962:7900"
-    networks:
-      - sirenia
+#   volumes:
+#     - /dev/shm:/dev/shm
+#   shm_size: 2g
+#   ports:
+#     - "4447:4444"
+#     - "5962:5900"
+#     - "7962:7900"
+#   networks:
+     #      - sirenia
 
   postgres:
     image: postgres:15-alpine

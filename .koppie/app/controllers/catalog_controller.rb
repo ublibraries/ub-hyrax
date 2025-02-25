@@ -3,6 +3,9 @@ class CatalogController < ApplicationController
   include Hydra::Catalog
   include Hydra::Controller::ControllerBehavior
 
+  #catalog yolo
+  include Blacklight::Catalog
+  include BlacklightOaiProvider::Controller
   # This filter applies the hydra access controls
   before_action :enforce_show_permissions, only: :show
 
@@ -303,6 +306,24 @@ class CatalogController < ApplicationController
     # If there are more than this many search results, no spelling ("did you
     # mean") suggestion is offered.
     config.spell_max = 5
+    
+    #oai setup
+    config.oai = {
+      provider: {
+        repository_name: 'UB-Hyrax',
+        repository_url: 'http://localhost/catalog/oai',
+        record_prefix: 'oai:test',
+        admin_email: 'ulib-sys@buffalo.edu',
+        sample_id: '109660'
+      },
+      document: {
+        limit: 100,            # number of records returned with each request, default: 15
+        set_fields: [        # ability to define ListSets, optional, default: nil
+          { label: 'collection', solr_field: 'isPartOf_ssim' }
+        ]
+      }
+    }
+
   end
 
   # disable the bookmark control from displaying in gallery view

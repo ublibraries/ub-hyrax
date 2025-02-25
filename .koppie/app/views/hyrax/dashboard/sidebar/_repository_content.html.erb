@@ -14,4 +14,23 @@
     <span class="fa fa-file" aria-hidden="true"></span> <span class="sidebar-action-text"><%= t('hyrax.admin.sidebar.works') %></span>
   <% end %>
 
-  <%= render 'hyrax/dashboard/sidebar/menu_partials', menu: menu, section: :repository_content %>
+<% if current_ability.can_import_works? %>
+  <%= menu.nav_link(
+    bulkrax.importers_path,
+    title: t('bulkrax.admin.sidebar.importers'),
+    class: "nav-link",
+    onclick: "dontChangeAccordion(event);"
+  ) do %>
+    <span class="fa fa-cloud-upload" aria-hidden="true"></span> <span class="sidebar-action-text"><%= t('bulkrax.admin.sidebar.importers') %></span>
+  <% end %>
+<% end %>
+<% if current_ability.can_export_works? %>
+  <%= menu.nav_link(
+    bulkrax.exporters_path,
+    title: t('bulkrax.admin.sidebar.exporters'),
+    class: "nav-link",
+    onclick: "dontChangeAccordion(event);"
+  ) do %>
+    <span class="fa fa-cloud-download" aria-hidden="true"></span> <span class="sidebar-action-text"><%= t('bulkrax.admin.sidebar.exporters') %></span>
+  <% end %>
+<% end %>

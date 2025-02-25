@@ -61,3 +61,7 @@ group :development, :test do
   gem 'pry-rescue'
 end
 gem 'bulkrax'
+# gem 'bulkrax', git: 'https://github.com/samvera/bulkrax.git', branch: 'valkyrie_adapter_fix'
+
+# required for bulkrax CSV generation rake task
+gem 'faker'

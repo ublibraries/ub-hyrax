@@ -11,13 +11,13 @@ Bulkrax.setup do | config |
 
   # WorkType to use as the default if none is specified in the import
   # Default is the first returned by Hyrax.config.curation_concerns
-  config.default_work_type = 'Image'
+  config.default_work_type = 'GenericWork'
 
   # Path to store pending imports
-  # config.import_path = 'tmp/imports'
+  config.import_path = 'tmp/imports'
 
   # Path to store exports before download
-  # config.export_path = 'tmp/exports'
+  config.export_path = 'tmp/exports'
 
   # Server name for oai request header
   # config.server_name = 'my_server@name.com'
@@ -134,8 +134,9 @@ Bulkrax.setup do | config |
   config.field_mappings["Bulkrax::XmlParser"] = default_field_mapping.merge({
                                                                                 # add or remove custom mappings for this parser here
                                                                               })
+  # I might be stupid 
+  #config.object_factory = Bulkrax::ObjectFactory
   config.object_factory = Bulkrax::ValkyrieObjectFactory
-  config.factory_class_name_coercer = Bulkrax::FactoryClassFinder::ValkyrieMigrationCoercer
   
   config.field_mappings = {
     "Bulkrax::CsvParser" => {
@@ -173,4 +174,41 @@ Bulkrax.setup do | config |
     Hyrax::DashboardController.sidebar_partials[:repository_content] << "hyrax/dashboard/sidebar/bulkrax_sidebar_additions"
   end
 
-  Bulkrax::CreateRelationshipsJob.update_child_records_works_file_sets = true
+#  Bulkrax::CreateRelationshipsJob.update_child_records_works_file_sets = true
+  # valkyrie adapter fix (not in main branch of bulkrax 9.0.0 yet)
+Bulkrax::ValkyrieObjectFactory.class_eval do
+    def self.search_by_property(value:, klass:, field: nil, name_field: nil, **)
+      name_field ||= field
+      raise "Expected named_field or field got nil" if name_field.blank?
+      return if value.blank?
+      Hyrax.query_service.custom_queries.find_by_model_and_property_value(model: klass, property: name_field, value: value)
+    end
+
+    def find_by_id
+      Hyrax.logger.error "###### Calling find_by_id, ID is: #{attributes[:id]}"
+      Hyrax.query_service.find_by(id: attributes[:id]) if attributes.key? :id
+    end  
+end
+
+# Adapted from emory-libraries/dlp-selfdeposit v
+#
+# Hyrax v5.0.1 Override - since Bulkrax introduces the Wings constant when it installs, the first test to determine query type passes,
+#   but the `is_a?` method produces an error because `Wings::Valkyrie` constant doesn't exist. This provides that test, as well.
+Rails.application.config.to_prepare do
+  Hyrax::DownloadsController.class_eval do
+    def file_set_parent(file_set_id)
+      file_set = if defined?(Wings) && defined?(Wings::Valkyrie) && Hyrax.metadata_adapter.is_a?(Wings::Valkyrie::MetadataAdapter)
+                   Hyrax.query_service.find_by_alternate_identifier(alternate_identifier: file_set_id, use_valkyrie: Hyrax.config.use_valkyrie?)
+                 else
+                   Hyrax.query_service.find_by(id: file_set_id)
+                 end
+      @parent ||=
+        case file_set
+        when Hyrax::Resource
+          Hyrax.query_service.find_parents(resource: file_set).first
+        else
+          file_set.parent
+       end
+    end
+  end
+end
