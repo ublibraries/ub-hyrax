@@ -1,3 +1,9 @@
+#ULIB stuff
+start.sh
+stop.sh
+restartrails.sh
+
+
 # bad gem etiquette, man
 .ruby-version
 .ruby-gemset

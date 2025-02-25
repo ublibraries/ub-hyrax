@@ -51,9 +51,9 @@ en:
       suffix: "@buffalo.edu"
     footer:
       copyright_html: "<strong>Copyright &copy; 2025 Samvera</strong> Licensed under the Apache License, Version 2.0"
-      service_html: Hosted with absolutely no testing by <a href="https://library.buffalo.edu" class="navbar-link" target="_blank">UB Libraries</a>
+      service_html: Hosted with absolutely no testing by <a href="https://github.com/ublibraries/" class="navbar-link" target="_blank">UB Libraries Digital Collections & Technology</a>
     institution_name: UB
     institution_name_full: The The State University of New York at Buffalo Libraries
     product_name: Koppie
     friendly_name: UB-Hyrax
-    product_twitter_handle: "@SamveraRepo"
+    product_twitter_handle: "@whatever"
